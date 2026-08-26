@@ -12,6 +12,6 @@
 </head>
 <body data-client="lavareda" data-base="../">
   <div class="boot-screen">CARREGANDO EXPERIÊNCIA AUDAZ…</div>
-  <script src="../app.js"></script>
+  <script src="../app.js" onerror="document.querySelector('.boot-screen').textContent='Não foi possível carregar o portal. Atualize a página.'"></script>
 </body>
 </html>
