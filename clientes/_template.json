@@ -1,0 +1,13 @@
+{
+  "id": "slug-do-cliente",
+  "name": "Nome do Cliente",
+  "descriptor": "Descrição curta",
+  "accent": "#ff1900",
+  "headline": "Texto de apoio.",
+  "manifesto": "FRASE. DE. IMPACTO.",
+  "welcome": "Mensagem de boas-vindas.",
+  "backend": "",
+  "projectKey": "",
+  "features": {"dashboard": true, "conteudos": true, "calendario": true, "aprovacoes": true, "arquivos": true},
+  "files": []
+}
