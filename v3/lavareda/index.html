@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#151514">
+  <title>Lavareda — Portal Audaz V3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-client="lavareda" data-root="../../">
+  <div id="app" class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-block"><div class="audaz-mark"><span class="record-dot"></span><strong>AUDAZ</strong><small>PORTAL</small></div></div>
+      <nav id="sideNav" class="side-nav"></nav>
+      <div class="sidebar-bottom">
+        <div class="portal-id"><span>PORTAL DE ENTREGAS</span><strong id="sideClient">Lavareda</strong></div>
+        <div class="theme-switcher" aria-label="Aparência"><button data-theme-mode="system" title="Automático">◐</button><button data-theme-mode="light" title="Claro">☼</button><button data-theme-mode="dark" title="Escuro">●</button></div>
+      </div>
+    </aside>
+    <header class="mobile-header"><div class="portal-brand"><b>AUDAZ</b><span>×</span><strong>LAVAREDA</strong></div><div class="mobile-actions"><button id="mobileTheme" class="icon-btn">◐</button><button id="mobileMenu" class="icon-btn">☰</button></div></header>
+    <main class="main-shell">
+      <div class="top-line"><div class="portal-brand"><b>AUDAZ</b><span>Portal de entregas</span><i>×</i><strong id="topClient">LAVAREDA</strong></div><div class="client-wordmark"><strong>LAVAREDA</strong><small>ADVOGADOS</small></div></div>
+      <section id="page-inicio" class="page active"></section>
+      <section id="page-conteudos" class="page"></section>
+      <section id="page-calendario" class="page"></section>
+      <section id="page-arquivos" class="page"></section>
+      <section id="page-revisao" class="page review-page"></section>
+    </main>
+  </div>
+  <div id="drawer" class="drawer"><div class="drawer-panel"><div class="drawer-head"><strong>MENU</strong><button id="closeDrawer">×</button></div><nav id="drawerNav"></nav></div></div>
+  <div id="toast" class="toast"></div>
+  <script src="../app.js"></script>
+</body>
+</html>
