@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#151514">
+  <title>Lavareda — Entrega Audaz V7</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,800;1,900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --red:#ff1900;--ink:#2b2b29;--paper:#e8e4d6;--bg:#151514;--text:#e8e4d6;
+      --muted:#9d9a91;--surface:#1c1c1a;--surface2:#242422;--line:rgba(232,228,214,.14);
+      --line2:rgba(232,228,214,.26);--success:#7ac185;--warning:#e3a34f;--max:1320px;
+      --header:70px;color-scheme:dark
+    }
+    html[data-theme="light"]{
+      --bg:#e8e4d6;--text:#2b2b29;--muted:#706e67;--surface:#ded9cb;--surface2:#f5f0e5;
+      --line:rgba(43,43,41,.13);--line2:rgba(43,43,41,.25);--success:#3f9251;--warning:#a86f21;
+      color-scheme:light
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Poppins,Arial,sans-serif;overflow-x:hidden}
+    button,a,textarea{font:inherit}button,a{color:inherit}button{cursor:pointer}a{text-decoration:none}
+    img{max-width:100%;display:block}:focus-visible{outline:2px solid var(--red);outline-offset:4px}
+    ::selection{background:var(--red);color:#fff}
+
+    .site-header{position:sticky;top:0;z-index:80;min-height:var(--header);display:flex;align-items:center;gap:28px;
+      padding:14px clamp(18px,4vw,58px);background:color-mix(in srgb,var(--bg) 91%,transparent);
+      backdrop-filter:saturate(120%) blur(12px);border-bottom:1px solid var(--line)}
+    .brand{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+    .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 0 5px rgba(255,25,0,.07)}
+    .brand b{font-size:19px;font-style:italic;font-weight:900;letter-spacing:-.05em}.brand i{font-style:normal;color:var(--red)}.brand strong{font-weight:600}
+    .nav{display:flex;gap:24px;margin-left:auto}.nav a{font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);transition:.18s}.nav a:hover{color:var(--text)}
+    .theme-btn,.menu-btn{width:38px;height:38px;border:0;background:transparent;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:.18s}
+    .theme-btn:hover,.menu-btn:hover{color:var(--red);background:color-mix(in srgb,var(--surface) 72%,transparent)}
+    .menu-btn{display:none}.progress-line{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden}
+    .progress-line i{display:block;height:100%;width:0;background:var(--red);transition:width .35s ease}
+    .mobile-menu{display:none;position:fixed;inset:var(--header) 0 auto 0;z-index:75;background:var(--bg);border-bottom:1px solid var(--line);padding:18px}
+    .mobile-menu.open{display:grid}.mobile-menu a{padding:14px 4px;border-bottom:1px solid var(--line);font-size:12px;text-transform:uppercase;letter-spacing:.1em}
+
+    .wrap{width:min(var(--max),calc(100% - 44px));margin:0 auto}
+    .hero{min-height:68vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:clamp(54px,7vw,92px) 0 clamp(54px,7vw,88px)}
+    .hero:before{content:"AUDAZ";position:absolute;right:-.04em;bottom:-.23em;font-size:clamp(150px,27vw,420px);font-style:italic;font-weight:900;
+      letter-spacing:-.1em;line-height:.8;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--text) 8%,transparent);pointer-events:none}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);gap:clamp(38px,7vw,100px);align-items:end;position:relative;z-index:1;width:100%}
+    .collab{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:10px;letter-spacing:.13em;text-transform:uppercase;margin-bottom:24px}
+    .collab b{color:var(--text)}.collab i{font-style:normal;color:var(--red)}
+    .eyebrow{display:block;color:var(--red);font-size:9px;letter-spacing:.19em;text-transform:uppercase}
+    .hero h1{font-size:clamp(52px,8.7vw,118px);line-height:.84;letter-spacing:-.074em;font-style:italic;font-weight:900;margin:9px 0 20px;max-width:900px}
+    .hero h1 em{font-style:inherit;color:var(--red)}.hero .period{font-size:clamp(17px,2vw,26px);font-weight:600;letter-spacing:-.025em;margin-bottom:17px}
+    .hero .lead{max-width:680px;color:var(--muted);font-size:clamp(13px,1.25vw,16px);line-height:1.75;margin:0}.hero .lead strong{color:var(--text);font-weight:600}
+    .hero-side{padding-bottom:4px}.hero-side .meta{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-bottom:24px}
+    .hero-side .meta span{padding-top:12px;border-top:1px solid var(--line);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em}
+    .hero-side .meta b{display:block;color:var(--text);font-size:34px;line-height:.9;margin-bottom:7px;font-style:italic}
+    .hero-cta{display:inline-flex;align-items:center;gap:14px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.12em}
+    .hero-cta .arrow{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;transition:.2s}.hero-cta:hover .arrow{transform:translateY(4px)}
+    .first-peek{height:58px;position:relative}.first-peek:after{content:"01";position:absolute;left:clamp(20px,5vw,70px);bottom:-22px;font-size:92px;font-style:italic;font-weight:900;letter-spacing:-.08em;color:var(--text);opacity:.045}
+
+    .chapter{position:relative;border-top:1px solid var(--line);scroll-margin-top:78px;overflow:hidden}
+    .chapter-inner{position:relative}
+    .chapter-kicker{display:flex;align-items:center;gap:14px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+    .chapter-kicker b{color:var(--text);font-weight:600}.chapter-kicker i{width:44px;height:1px;background:var(--red)}
+    .chapter-number{font-size:clamp(70px,10vw,154px);font-style:italic;font-weight:900;line-height:.72;letter-spacing:-.08em;color:var(--red)}
+    .chapter-title{font-size:clamp(34px,5.5vw,78px);line-height:.98;letter-spacing:-.06em;font-style:italic;font-weight:900;margin:18px 0 15px;text-wrap:balance}
+    .date{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.13em;line-height:1.7}.date strong{display:block;color:var(--text);font-size:12px;letter-spacing:.04em}
+    .state-note{display:inline-flex;align-items:center;gap:9px;margin-top:20px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);min-height:28px}
+    .state-note:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--warning)}.state-note.aprovado{color:var(--success)}.state-note.aprovado:before{background:var(--success)}
+    .state-note.alteracao{color:var(--red)}.state-note.alteracao:before{background:var(--red)}
+
+    .chapter--reel{padding:clamp(92px,11vw,160px) 0}
+    .chapter--reel:before{content:"";position:absolute;inset:0 auto 0 52%;width:1px;background:var(--line);opacity:.45}
+    .reel-grid{display:grid;grid-template-columns:minmax(280px,.75fr) minmax(0,1.25fr);gap:clamp(42px,7vw,112px);align-items:start}
+    .reel-context{position:sticky;top:104px;min-height:65vh;display:flex;flex-direction:column;justify-content:flex-start;padding-top:4px}
+    .reel-quote{margin-top:28px;font-size:clamp(21px,2.5vw,34px);line-height:1.14;letter-spacing:-.035em;max-width:520px;color:var(--text)}
+    .reel-quote:before{content:"“";display:block;color:var(--red);font-size:52px;font-weight:700;line-height:.6;margin-bottom:18px}
+    .reel-stage{position:relative;min-height:820px;padding:40px 0 180px;display:flex;justify-content:center}
+    .video-frame{width:min(46vw,430px);aspect-ratio:9/16;background:#0d0d0c;overflow:hidden;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.3);z-index:2}
+    .video-frame iframe{width:100%;height:100%;border:0;display:block}
+    .video-placeholder{position:absolute;inset:0;border:0;background-size:cover;background-position:center;display:grid;place-items:center;color:white}
+    .video-placeholder:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.48))}
+    .video-placeholder span{position:relative;z-index:2;width:72px;height:72px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-size:22px;padding-left:4px;box-shadow:0 14px 40px rgba(0,0,0,.28);transition:.22s}
+    .video-placeholder:hover span{transform:scale(1.06)}
+    .reel-cover{position:absolute;right:max(0px,2vw);bottom:10px;width:min(30vw,250px);z-index:3}
+    .reel-cover:before{content:"CAPA DO REEL";display:block;font-size:8px;letter-spacing:.16em;color:var(--red);margin-bottom:10px}
+    .reel-cover img{width:100%;max-height:390px;object-fit:contain;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,.25);cursor:zoom-in}
+    .reel-pack-line{position:absolute;left:0;right:0;bottom:90px;height:1px;background:var(--line)}
+    .reel-pack-label{position:absolute;left:0;bottom:105px;font-size:8px;letter-spacing:.17em;color:var(--muted);text-transform:uppercase}
+    .media-tools{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px}
+    .utility-btn,.download-link{border:0;background:transparent;padding:8px 0;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:inline-flex;align-items:center;gap:7px;transition:.18s;border-bottom:1px solid var(--line)}
+    .utility-btn:hover,.download-link:hover{color:var(--red);border-color:var(--red)}.utility-btn.success,.download-link.success{color:var(--success);border-color:var(--success)}
+
+    .chapter--carousel{padding:clamp(94px,11vw,158px) 0;background:color-mix(in srgb,var(--surface) 34%,transparent)}
+    .carousel-head{display:grid;grid-template-columns:.52fr 1.48fr;gap:clamp(36px,7vw,110px);align-items:end;margin-bottom:54px}
+    .carousel-head .chapter-title{margin-bottom:0}.carousel-head-copy{max-width:760px}
+    .carousel-sequence{position:relative;margin-left:max(22px,calc((100vw - var(--max))/2));overflow:hidden}
+    .carousel-viewport{overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;cursor:grab;padding-right:12vw}
+    .carousel-viewport::-webkit-scrollbar{display:none}.carousel-viewport.dragging{cursor:grabbing;scroll-snap-type:none}
+    .carousel-track{display:flex;gap:clamp(14px,2vw,28px)}
+    .carousel-slide{flex:0 0 min(78vw,780px);scroll-snap-align:start;display:grid;place-items:center;min-height:600px;background:var(--bg);position:relative;overflow:hidden}
+    .carousel-slide img{width:100%;height:100%;max-height:78vh;object-fit:contain;user-select:none;-webkit-user-drag:none}
+    .carousel-slide:after{content:attr(data-slide);position:absolute;left:18px;bottom:15px;font-size:9px;letter-spacing:.15em;color:var(--muted)}
+    .carousel-controls{width:min(var(--max),calc(100% - 44px));margin:18px auto 0;display:flex;justify-content:space-between;align-items:center;gap:18px}
+    .carousel-controls .group{display:flex;gap:8px}.round{width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:transparent;display:grid;place-items:center;transition:.18s}
+    .round:hover:not(:disabled){border-color:var(--red);color:var(--red)}.round:disabled{opacity:.25;cursor:not-allowed}
+    .carousel-count{font-size:9px;color:var(--muted);letter-spacing:.13em}.carousel-dots{display:flex;gap:7px;align-items:center}.carousel-dots i{width:22px;height:1px;background:var(--line2);transition:.2s}.carousel-dots i.active{width:48px;background:var(--red)}
+    .carousel-tools{width:min(var(--max),calc(100% - 44px));margin:14px auto 0}.carousel-downloads{display:none;gap:13px;flex-wrap:wrap;margin-top:12px}.carousel-downloads.open{display:flex}.carousel-downloads a{font-size:9px;color:var(--muted);border-bottom:1px solid var(--line);padding:7px 0}
+
+    .chapter--static{padding:clamp(94px,11vw,160px) 0}
+    .static-grid{display:grid;grid-template-columns:minmax(0,1.34fr) minmax(300px,.66fr);gap:clamp(42px,7vw,112px);align-items:start}
+    .static-poster{min-height:760px;display:grid;place-items:center;position:relative;background:color-mix(in srgb,var(--surface) 45%,transparent);overflow:hidden}
+    .static-poster:before{content:"PÔSTER";position:absolute;left:-.03em;top:.1em;font-size:clamp(84px,12vw,180px);font-style:italic;font-weight:900;letter-spacing:-.08em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--text) 7%,transparent)}
+    .static-poster img{max-height:82vh;max-width:88%;object-fit:contain;position:relative;z-index:2;cursor:zoom-in;box-shadow:0 28px 70px rgba(0,0,0,.16)}
+    .static-context{position:sticky;top:105px;padding-top:6px}.static-context .chapter-title{font-size:clamp(34px,4.6vw,64px)}
+    .static-note{margin-top:28px;padding-top:18px;border-top:1px solid var(--line);font-size:11px;line-height:1.75;color:var(--muted)}
+
+    .editorial-copy{width:min(850px,100%);margin-top:clamp(62px,7vw,94px);padding-top:26px;border-top:1px solid var(--line)}
+    .copy-title{display:flex;justify-content:space-between;gap:22px;align-items:flex-end;margin-bottom:26px}
+    .copy-title h3{margin:0;font-size:clamp(25px,3vw,40px);font-style:italic;letter-spacing:-.045em}.copy-title span{font-size:9px;color:var(--red);letter-spacing:.15em;text-transform:uppercase}
+    .caption-text{white-space:pre-wrap;font-size:clamp(14px,1.3vw,17px);line-height:1.95;max-width:760px}.caption-empty{color:var(--muted);font-style:italic}
+    .decision{width:min(850px,100%);margin-top:clamp(55px,6vw,82px);padding:28px 0 0;border-top:1px solid var(--line);position:relative}
+    .decision:before{content:"DECISÃO";position:absolute;top:-7px;right:0;background:var(--bg);padding-left:12px;font-size:8px;letter-spacing:.17em;color:var(--muted)}
+    .chapter--carousel .decision:before{background:color-mix(in srgb,var(--surface) 34%,var(--bg))}
+    .decision h3{font-size:clamp(22px,2.6vw,33px);font-style:italic;letter-spacing:-.035em;margin:0 0 10px}.decision p{margin:0 0 20px;color:var(--muted);font-size:12px;line-height:1.7}
+    .decision-actions{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+    .action{border:0;background:transparent;padding:12px 0;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.11em;display:inline-flex;align-items:center;gap:9px;transition:.16s;min-height:44px;border-bottom:1px solid var(--line2)}
+    .action:hover{color:var(--red);border-color:var(--red)}.action:active,.action.pressed{transform:translateY(1px)}.action.primary{color:var(--red);border-color:var(--red)}
+    .action[disabled]{opacity:.55;cursor:wait}.action.success{color:var(--success);border-color:var(--success)}
+    .feedback-box{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .26s ease,opacity .2s ease}.feedback-box.open{grid-template-rows:1fr;opacity:1;margin-top:22px}
+    .feedback-inner{overflow:hidden}.feedback-inner label{display:block;font-size:9px;color:var(--red);text-transform:uppercase;letter-spacing:.14em;margin-bottom:10px}
+    .feedback-inner textarea{width:100%;min-height:130px;resize:vertical;border:0;border-bottom:1px solid var(--line2);background:transparent;padding:14px 0;color:var(--text);line-height:1.7;font-size:14px}
+    .feedback-actions{display:flex;justify-content:flex-end;gap:18px;margin-top:12px}.feedback-status{font-size:10px;color:var(--success);margin-top:12px;min-height:18px}
+    .chapter-signature{margin-top:52px;display:flex;align-items:center;gap:14px;color:var(--muted);font-size:8px;letter-spacing:.15em;text-transform:uppercase}.chapter-signature i{height:1px;flex:1;background:var(--line)}
+    .chapter[data-state="aprovado"] .chapter-number{color:color-mix(in srgb,var(--success) 75%,var(--text))}.chapter[data-state="aprovado"] .chapter-signature:before{content:"✓ APROVADO";color:var(--success)}
+    .chapter[data-state="alteracao"] .chapter-signature:before{content:"↻ AJUSTE REGISTRADO";color:var(--red)}
+
+    .completion{padding:clamp(110px,13vw,190px) 0;border-top:1px solid var(--line);min-height:80vh;display:none;align-items:center;position:relative;overflow:hidden}
+    .completion.show{display:flex}.completion:before{content:"100%";position:absolute;right:-.02em;top:.05em;font-size:clamp(120px,23vw,330px);font-style:italic;font-weight:900;letter-spacing:-.1em;color:transparent;-webkit-text-stroke:1px color-mix(in srgb,var(--text) 7%,transparent)}
+    .completion-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(42px,8vw,120px);align-items:end;position:relative;z-index:1}.completion-mark{width:66px;height:66px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:24px;margin-bottom:28px}
+    .completion h2{font-size:clamp(52px,8vw,108px);line-height:.85;letter-spacing:-.072em;font-style:italic;margin:9px 0 22px}.completion h2 em{font-style:inherit;color:var(--red)}
+    .completion p{color:var(--muted);line-height:1.8;max-width:680px}.completion-stats{display:flex;gap:34px;margin-top:34px}.completion-stats span{font-size:9px;text-transform:uppercase;letter-spacing:.11em;color:var(--muted)}.completion-stats b{display:block;color:var(--text);font-size:31px;font-style:italic}
+    .what-next{border-left:1px solid var(--line);padding-left:30px}.what-next h3{font-size:10px;letter-spacing:.15em;color:var(--red);margin:0 0 20px}.what-next p{font-size:12px;margin:0 0 13px}
+    .secondary{padding:80px 0;border-top:1px solid var(--line)}.secondary-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:32px}.secondary-head h2{font-size:clamp(30px,4vw,54px);font-style:italic;letter-spacing:-.05em;margin:6px 0 0}.secondary-head small{max-width:420px;color:var(--muted);line-height:1.6}
+    .history-row,.calendar-row,.file-row{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:24px;padding:20px 0;border-top:1px solid var(--line);align-items:center}
+    .history-row>span,.calendar-row time,.file-row>span{font-size:9px;color:var(--red);letter-spacing:.12em;text-transform:uppercase}.history-row strong,.calendar-row strong,.file-row strong{display:block;font-size:14px}.history-row small,.calendar-row small,.file-row small{color:var(--muted);font-size:10px;line-height:1.5}
+    .file-row a{font-size:9px;letter-spacing:.1em;color:var(--muted)}.file-row a:hover{color:var(--red)}
+    .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:120;display:none;place-items:center;padding:36px}.lightbox.open{display:grid}.lightbox img{max-width:92vw;max-height:90vh;object-fit:contain}.lightbox button{position:absolute;right:22px;top:18px;width:46px;height:46px;border:1px solid rgba(255,255,255,.3);border-radius:50%;background:transparent;color:#fff;font-size:25px}
+    .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,20px);z-index:130;background:var(--text);color:var(--bg);padding:11px 16px;border-radius:999px;font-size:10px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.7,.2,1)}.reveal.in{opacity:1;transform:none}
+    .reveal-delay-1{transition-delay:.07s}.reveal-delay-2{transition-delay:.14s}.reveal-delay-3{transition-delay:.2s}
+    .chapter--reel .reel-stage.reveal{transform:translateY(34px) scale(.985)}.chapter--reel .reel-stage.reveal.in{transform:none}
+    .chapter--reel .reel-cover.reveal{transform:translate(18px,28px)}.chapter--reel .reel-cover.reveal.in{transform:none}
+    .chapter--static .static-poster.reveal{transform:translateY(26px) scale(.99)}.chapter--static .static-poster.reveal.in{transform:none}
+
+    @media(max-width:900px){
+      :root{--header:64px}.nav{display:none}.menu-btn{display:grid}.site-header{padding-inline:18px}
+      .wrap{width:min(100% - 32px,var(--max))}.hero{min-height:62vh;padding:46px 0 52px}.hero-grid{grid-template-columns:1fr;gap:36px}.hero-side{max-width:440px}.hero h1{font-size:clamp(50px,15vw,82px)}
+      .first-peek{height:24px}
+      .chapter--reel,.chapter--carousel,.chapter--static{padding:76px 0}
+      .chapter--reel:before{display:none}.reel-grid,.static-grid{grid-template-columns:1fr;gap:42px}.reel-context,.static-context{position:relative;top:auto;min-height:0}.reel-quote{font-size:22px}
+      .reel-stage{min-height:660px;padding:10px 0 150px}.video-frame{width:min(78vw,390px)}.reel-cover{width:min(40vw,210px);right:0}.reel-pack-line{bottom:75px}.reel-pack-label{bottom:90px}
+      .carousel-head{grid-template-columns:1fr;gap:28px}.carousel-sequence{margin-left:16px}.carousel-viewport{padding-right:15vw}.carousel-slide{flex-basis:82vw;min-height:520px}.carousel-controls,.carousel-tools{width:calc(100% - 32px)}
+      .static-poster{min-height:580px}.static-poster img{max-height:75vh;max-width:96%}
+      .editorial-copy,.decision{width:100%}.completion-grid{grid-template-columns:1fr}.what-next{border-left:0;border-top:1px solid var(--line);padding:28px 0 0}.secondary-head{align-items:start;flex-direction:column}
+    }
+    @media(max-width:600px){
+      .brand strong{max-width:110px;overflow:hidden;text-overflow:ellipsis}.theme-btn{margin-left:auto}
+      .hero{min-height:58vh}.hero h1{font-size:clamp(48px,16vw,72px)}.hero-side .meta b{font-size:28px}
+      .chapter-number{font-size:72px}.chapter-title{font-size:clamp(34px,11vw,52px)}
+      .reel-stage{min-height:600px;padding-bottom:145px}.video-frame{width:min(84vw,360px)}.reel-cover{width:43vw;max-width:185px}
+      .carousel-slide{flex-basis:86vw;min-height:460px}.carousel-slide img{max-height:68vh}.carousel-dots{display:none}
+      .static-poster{min-height:500px}.static-note{font-size:10px}
+      .copy-title{align-items:flex-start;flex-direction:column}.caption-text{font-size:14px;line-height:1.85}
+      .decision-actions{gap:16px}.action{font-size:9px;min-height:46px}.feedback-actions{justify-content:flex-start;flex-wrap:wrap}
+      .completion-stats{gap:22px;flex-wrap:wrap}.history-row,.calendar-row,.file-row{grid-template-columns:1fr;gap:8px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none!important;transition:none!important}*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body data-client="lavareda" data-root="../../">
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="Voltar ao início"><span class="dot"></span><b>AUDAZ</b><i>×</i><strong id="clientName">LAVAREDA</strong></a>
+  <nav class="nav"><a href="#entregas">Entregas</a><a href="#calendario">Calendário</a><a href="#arquivos">Arquivos</a></nav>
+  <button id="themeBtn" class="theme-btn" aria-label="Alternar tema">◐</button><button id="menuBtn" class="menu-btn" aria-label="Abrir menu" aria-expanded="false">☰</button>
+  <div class="progress-line"><i id="globalProgress"></i></div>
+</header>
+<nav id="mobileMenu" class="mobile-menu"><a href="#entregas">Entregas</a><a href="#calendario">Calendário</a><a href="#arquivos">Arquivos</a></nav>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="collab reveal"><b>AUDAZ</b><i>×</i><span id="heroClient">LAVAREDA</span></div>
+        <span class="eyebrow reveal reveal-delay-1">ENTREGA DA SEMANA</span>
+        <h1 class="reveal reveal-delay-2" id="heroTitle">SUA SEMANA <em>ESTÁ PRONTA.</em></h1>
+        <div class="period reveal reveal-delay-2">01 — 05 SETEMBRO</div>
+        <p class="lead reveal reveal-delay-3"><strong>Quatro conteúdos preparados para esta semana.</strong><br>Uma sequência pensada para presença, autoridade e consistência jurídica.</p>
+      </div>
+      <aside class="hero-side reveal reveal-delay-3">
+        <div class="meta"><span><b>04</b>conteúdos</span><span><b>~6</b>min de revisão</span></div>
+        <a class="hero-cta" href="#conteudo-1">VER ENTREGA <span class="arrow">↓</span></a>
+      </aside>
+    </div>
+  </section>
+  <div class="first-peek"></div>
+
+  <section id="delivery"></section>
+
+  <section id="completion" class="completion">
+    <div class="wrap completion-grid">
+      <div>
+        <div class="completion-mark">✓</div><span class="eyebrow">ENTREGA REVISADA</span>
+        <h2>TUDO CERTO <em>POR AQUI.</em></h2>
+        <p>Sua entrega desta semana foi revisada. O trabalho aprovado segue para publicação e os ajustes retornam para a Audaz.</p>
+        <div class="completion-stats"><span><b id="doneApproved">0</b>aprovados</span><span><b id="doneChanges">0</b>ajuste solicitado</span><span><b>4/4</b>revisados</span></div>
+      </div>
+      <aside class="what-next"><h3>O QUE ACONTECE AGORA</h3><p>✓ Conteúdos aprovados seguem para publicação.</p><p>↻ O conteúdo com ajuste volta para a Audaz.</p><p>✓ Quando a nova versão estiver pronta, ela aparecerá aqui.</p><div class="media-tools"><a class="utility-btn" href="#top">VOLTAR AO TOPO ↑</a><a class="utility-btn" href="#calendario">VER CALENDÁRIO →</a></div></aside>
+    </div>
+  </section>
+
+  <section id="entregas" class="secondary"><div class="wrap"><div class="secondary-head"><div><span class="eyebrow">ENTREGAS ANTERIORES</span><h2>O trabalho fica registrado.</h2></div><small>Histórico das decisões realizadas neste portal.</small></div><div id="historyList"></div></div></section>
+  <section id="calendario" class="secondary"><div class="wrap"><div class="secondary-head"><div><span class="eyebrow">CALENDÁRIO</span><h2>Sua semana, em contexto.</h2></div><small>O calendário é uma visão ampliada; cada peça já mostra sua data na entrega.</small></div><div id="calendarList"></div></div></section>
+  <section id="arquivos" class="secondary"><div class="wrap"><div class="secondary-head"><div><span class="eyebrow">ARQUIVOS</span><h2>Materiais quando você precisar.</h2></div><small>Os downloads principais já ficam junto de cada peça.</small></div><div id="filesList"></div></div></section>
+</main>
+
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true"><button id="closeLightbox">×</button><img id="lightboxImage" alt=""></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const ROOT=document.body.dataset.root||'../../',CLIENT=document.body.dataset.client||'lavareda';
+const DELIVERY={id:'08',contentIds:['HO-01','KP-01','VM-01','ES-01']};
+const MEDIA={
+  'HO-01':{type:'reel',label:'REEL',intent:'AUTORIDADE'},
+  'KP-01':{type:'static',label:'ESTÁTICO',intent:'RELACIONAMENTO',image:'1eOFPH5mYWFv79zhxC5VorGKnzVTCrXNx',title:'Gravidez de alto risco e benefício por incapacidade sem carência',date:'2026-09-02'},
+  'VM-01':{type:'carousel',label:'CARROSSEL',intent:'POSICIONAMENTO',slides:['1r0fQRijZaMmrAVP1fgREq8EV_buNi6mt','1x_cx2gtECzvErlIPn8NQZQctH_EISNk_','1BOyJ9LsMl-ualKIDUBfc9n673SLkWaKN','1iLIKAe9yRRWAc_O7fVaHoxtn-BKO1L7r','1H4_yLgSdLAgOq9OELij0oqCP2SRZowCW'],title:'Cônjuge separado e dependência econômica para pensão militar',date:'2026-09-04'},
+  'ES-01':{type:'reel',label:'REEL',intent:'AQUISIÇÃO',date:'2026-09-05'}
+};
+const state={config:null,contents:[],actions:[],lot:'',busy:new Set(),feedbackOpen:new Set()};
+const esc=(v='')=>String(v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+const thumb=(id,size='w1800')=>`https://drive.google.com/thumbnail?id=${id}&sz=${size}`;
+const preview=id=>`https://drive.google.com/file/d/${id}/preview`;
+const download=id=>`https://drive.google.com/uc?export=download&id=${id}`;
+
+function mediaFor(c){return{type:'reel',label:'REEL',intent:'AUTORIDADE',...(MEDIA[c.id]||{})}}
+function view(c){const m=mediaFor(c);return{...c,title:m.title||c.title,date:m.date||c.date,media:m}}
+function dateObj(d){if(!d)return null;const[y,m,day]=d.split('-').map(Number);return new Date(y,m-1,day)}
+function weekdayDate(d){const x=dateObj(d);return x?x.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'}).replace(/\./g,'').toUpperCase():''}
+function statusFor(c){let s=c.initialStatus||'aguardando';state.actions.filter(a=>a.contentId===c.id).forEach(a=>{if(a.action==='APROVADO')s='aprovado';if(a.action==='ALTERACAO')s='alteracao'});return s}
+function deliveryContents(){const x=DELIVERY.contentIds.map(id=>state.contents.find(c=>c.id===id)).filter(Boolean);return x.length?x:state.contents.slice(0,4)}
+function stats(){const items=deliveryContents(),approved=items.filter(c=>statusFor(c)==='aprovado'),changes=items.filter(c=>statusFor(c)==='alteracao');return{items,total:items.length,approved,changes,reviewed:approved.length+changes.length}}
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('show'),2200)}
+function stateNote(c){const s=statusFor(c);return`<div class="state-note ${s}">${s==='aprovado'?'APROVADO':s==='alteracao'?'AJUSTE SOLICITADO':'PRONTO PARA REVISÃO'}</div>`}
+function updateProgress(){
+  const s=stats(),pct=s.total?Math.round(s.reviewed/s.total*100):0;
+  $('#globalProgress').style.width=pct+'%';$('#doneApproved').textContent=s.approved.length;$('#doneChanges').textContent=s.changes.length;
+  $('#completion').classList.toggle('show',s.total>0&&s.reviewed===s.total);
+  $('#heroTitle').innerHTML=s.reviewed===0?'SUA SEMANA <em>ESTÁ PRONTA.</em>':s.reviewed<s.total?'SUA ENTREGA <em>ESTÁ ESPERANDO POR VOCÊ.</em>':'TUDO CERTO <em>POR AQUI.</em>';
+}
+function downloadBtn(label,id){return id?`<a class="download-link" data-download href="${download(id)}" target="_blank" rel="noopener">↓ ${label}</a>`:''}
+function decisionBlock(c){
+  const s=statusFor(c),open=state.feedbackOpen.has(c.id);
+  if(s==='aprovado')return`<div class="decision"><h3>Resolvido.</h3><p>Esta peça está aprovada para seguir para publicação.</p><button class="action success" disabled>✓ APROVADO</button></div>`;
+  if(s==='alteracao')return`<div class="decision"><h3>Ajuste registrado.</h3><p>A Audaz recebeu sua solicitação. Você pode continuar rolando normalmente.</p><button class="action success" disabled>✓ AJUSTE SOLICITADO</button></div>`;
+  return`<div class="decision"><h3>Está tudo certo com essa peça?</h3><p>Se estiver pronta, aprove. Se algo precisar mudar, registre só o necessário.</p><div class="decision-actions"><button class="action" data-open-feedback="${c.id}">PEDIR AJUSTE</button><button class="action primary" data-approve="${c.id}">✓ APROVAR</button></div><div class="feedback-box ${open?'open':''}" id="feedback-${c.id}"><div class="feedback-inner"><label>O QUE PRECISA MUDAR?</label><textarea id="textarea-${c.id}" placeholder="Aos 00:18, trocar a frase de abertura."></textarea><div class="feedback-actions"><button class="action" data-cancel-feedback="${c.id}">CANCELAR</button><button class="action primary" data-send-feedback="${c.id}">ENVIAR AJUSTE</button></div><div class="feedback-status" id="feedback-status-${c.id}"></div></div></div></div>`;
+}
+function editorialCopy(c){return`<div class="editorial-copy reveal reveal-delay-1"><div class="copy-title"><div><span>A MENSAGEM QUE ACOMPANHA</span><h3>Legenda</h3></div><button class="utility-btn" data-copy="${c.id}">COPIAR LEGENDA</button></div><div class="caption-text ${c.caption?'':'caption-empty'}">${esc(c.caption||'Legenda ainda não adicionada.')}</div></div>`}
+
+function reelChapter(c,i,total){
+  const d=view(c),m=d.media,cover=c.coverId||c.videoId;
+  return`<article id="conteudo-${i+1}" class="chapter chapter--reel" data-state="${statusFor(c)}"><div class="wrap chapter-inner reel-grid">
+    <aside class="reel-context">
+      <div class="chapter-number reveal">${String(i+1).padStart(2,'0')}</div>
+      <div class="chapter-kicker reveal reveal-delay-1"><b>${m.intent}</b><i></i><span>${m.label}</span></div>
+      <h2 class="chapter-title reveal reveal-delay-1">${esc(d.title)}</h2>
+      <div class="date reveal reveal-delay-2"><strong>${weekdayDate(d.date)}</strong>PUBLICAÇÃO PREVISTA</div>
+      <p class="reel-quote reveal reveal-delay-2">${esc(d.title)}</p>
+      <div class="reveal reveal-delay-3">${stateNote(c)}</div>
+    </aside>
+    <div>
+      <div class="reel-stage reveal reveal-delay-1">
+        <div class="video-frame" data-video-frame="${c.id}"><button class="video-placeholder" data-play="${c.id}" style="background-image:url('${thumb(cover,'w900')}')"><span>▶</span></button></div>
+        <div class="reel-cover reveal reveal-delay-2"><img src="${thumb(cover)}" data-zoom alt="Capa — ${esc(d.title)}" loading="lazy"></div>
+        <div class="reel-pack-line"></div><div class="reel-pack-label">VÍDEO + CAPA · UM PACOTE COMPLETO</div>
+      </div>
+      <div class="media-tools reveal reveal-delay-2">${downloadBtn('BAIXAR VÍDEO',c.videoId)}${downloadBtn('BAIXAR CAPA',cover)}</div>
+      ${editorialCopy(c)}
+      <div class="reveal reveal-delay-2">${decisionBlock(c)}</div>
+      <div class="chapter-signature"><i></i>${i<total-1?'PRÓXIMO CAPÍTULO ↓':'ÚLTIMA PEÇA'}</div>
+    </div>
+  </div></article>`;
+}
+function carouselChapter(c,i,total){
+  const d=view(c),m=d.media;
+  return`<article id="conteudo-${i+1}" class="chapter chapter--carousel" data-state="${statusFor(c)}">
+    <div class="wrap carousel-head">
+      <div><div class="chapter-number reveal">${String(i+1).padStart(2,'0')}</div><div class="chapter-kicker reveal reveal-delay-1"><b>${m.intent}</b><i></i><span>${m.label}</span></div></div>
+      <div class="carousel-head-copy"><h2 class="chapter-title reveal reveal-delay-1">${esc(d.title)}</h2><div class="date reveal reveal-delay-2"><strong>${weekdayDate(d.date)}</strong>PUBLICAÇÃO PREVISTA</div><div class="reveal reveal-delay-2">${stateNote(c)}</div></div>
+    </div>
+    <div class="carousel-sequence reveal reveal-delay-1">
+      <div class="carousel-viewport" data-carousel="${c.id}" tabindex="0" aria-label="Carrossel ${esc(d.title)}"><div class="carousel-track">${m.slides.map((id,n)=>`<div class="carousel-slide" data-slide="${String(n+1).padStart(2,'0')} / ${String(m.slides.length).padStart(2,'0')}"><img src="${thumb(id)}" alt="Slide ${n+1} de ${m.slides.length}" loading="${n?'lazy':'eager'}"></div>`).join('')}</div></div>
+    </div>
+    <div class="carousel-controls"><div class="group"><button class="round" data-prev="${c.id}" aria-label="Slide anterior">←</button><button class="round" data-next="${c.id}" aria-label="Próximo slide">→</button></div><div class="carousel-dots" id="dots-${c.id}">${m.slides.map((_,n)=>`<i class="${n===0?'active':''}"></i>`).join('')}</div><span class="carousel-count" id="count-${c.id}">01 / ${String(m.slides.length).padStart(2,'0')}</span></div>
+    <div class="carousel-tools"><div class="media-tools"><button class="utility-btn" data-toggle-downloads="${c.id}">↓ BAIXAR CARROSSEL</button></div><div class="carousel-downloads" id="downloads-${c.id}">${m.slides.map((id,n)=>`<a data-download href="${download(id)}" target="_blank" rel="noopener">↓ Slide ${String(n+1).padStart(2,'0')}</a>`).join('')}</div>
+      ${editorialCopy(c)}<div class="reveal reveal-delay-2">${decisionBlock(c)}</div><div class="chapter-signature"><i></i>${i<total-1?'PRÓXIMO CAPÍTULO ↓':'ÚLTIMA PEÇA'}</div></div>
+  </article>`;
+}
+function staticChapter(c,i,total){
+  const d=view(c),m=d.media;
+  return`<article id="conteudo-${i+1}" class="chapter chapter--static" data-state="${statusFor(c)}"><div class="wrap static-grid">
+    <div><div class="static-poster reveal reveal-delay-1"><img src="${thumb(m.image)}" data-zoom alt="${esc(d.title)}" loading="lazy"></div><div class="media-tools reveal reveal-delay-2">${downloadBtn('BAIXAR ARTE',m.image)}</div></div>
+    <aside class="static-context">
+      <div class="chapter-number reveal">${String(i+1).padStart(2,'0')}</div><div class="chapter-kicker reveal reveal-delay-1"><b>${m.intent}</b><i></i><span>${m.label}</span></div>
+      <h2 class="chapter-title reveal reveal-delay-1">${esc(d.title)}</h2><div class="date reveal reveal-delay-2"><strong>${weekdayDate(d.date)}</strong>PUBLICAÇÃO PREVISTA</div>
+      <p class="static-note reveal reveal-delay-2">Uma peça para ser vista como peça — não como arquivo dentro de um sistema.</p><div class="reveal reveal-delay-2">${stateNote(c)}</div>
+      ${editorialCopy(c)}<div class="reveal reveal-delay-2">${decisionBlock(c)}</div><div class="chapter-signature"><i></i>${i<total-1?'PRÓXIMO CAPÍTULO ↓':'ÚLTIMA PEÇA'}</div>
+    </aside>
+  </div></article>`;
+}
+function chapter(c,i,total){const m=mediaFor(c);return m.type==='carousel'?carouselChapter(c,i,total):m.type==='static'?staticChapter(c,i,total):reelChapter(c,i,total)}
+function renderDelivery(){const s=stats();$('#delivery').innerHTML=s.items.map((c,i)=>chapter(c,i,s.total)).join('');bindDynamic();observe();updateProgress()}
+function updateChapter(id){
+  const c=state.contents.find(x=>x.id===id),i=deliveryContents().findIndex(x=>x.id===id),a=$(`#conteudo-${i+1}`);
+  if(!c||!a)return;
+  a.dataset.state=statusFor(c);
+  const note=a.querySelector('.state-note');if(note)note.outerHTML=stateNote(c);
+  const dec=a.querySelector('.decision');if(dec)dec.outerHTML=decisionBlock(c);
+  bindDynamic();updateProgress();
+}
+
+function currentCarouselIndex(vp){
+  const slides=[...vp.querySelectorAll('.carousel-slide')];if(!slides.length)return 0;
+  const target=vp.scrollLeft;let best=0,dist=Infinity;
+  slides.forEach((s,i)=>{const d=Math.abs(s.offsetLeft-target);if(d<dist){dist=d;best=i}});
+  return best;
+}
+function moveCarousel(id,d){
+  const vp=$(`[data-carousel="${id}"]`),slides=[...vp.querySelectorAll('.carousel-slide')];
+  const cur=currentCarouselIndex(vp),n=Math.max(0,Math.min(slides.length-1,cur+d));
+  vp.scrollTo({left:slides[n].offsetLeft,behavior:'smooth'});
+}
+function bindDynamic(){
+  $$('[data-play]').forEach(b=>b.onclick=()=>{const c=state.contents.find(x=>x.id===b.dataset.play);b.closest('[data-video-frame]').innerHTML=`<iframe src="${preview(c.videoId)}" allow="autoplay; fullscreen" allowfullscreen></iframe>`});
+  $$('[data-zoom]').forEach(img=>img.onclick=()=>{$('#lightboxImage').src=img.src;$('#lightboxImage').alt=img.alt;$('#lightbox').classList.add('open')});
+  $$('[data-copy]').forEach(b=>b.onclick=async()=>{const c=state.contents.find(x=>x.id===b.dataset.copy),old=b.textContent;try{await navigator.clipboard.writeText(c?.caption||'');b.textContent='✓ COPIADA';b.classList.add('success');setTimeout(()=>{b.textContent=old;b.classList.remove('success')},1600)}catch{toast('Não foi possível copiar')}});
+  $$('[data-download]').forEach(a=>a.onclick=()=>{const old=a.textContent;a.textContent='↓ DOWNLOAD INICIADO';a.classList.add('success');setTimeout(()=>{a.textContent=old;a.classList.remove('success')},1800)});
+  $$('[data-toggle-downloads]').forEach(b=>b.onclick=()=>{const e=$(`#downloads-${b.dataset.toggleDownloads}`);e.classList.toggle('open');b.textContent=e.classList.contains('open')?'FECHAR DOWNLOADS':'↓ BAIXAR CARROSSEL'});
+  $$('[data-prev]').forEach(b=>b.onclick=()=>moveCarousel(b.dataset.prev,-1));$$('[data-next]').forEach(b=>b.onclick=()=>moveCarousel(b.dataset.next,1));
+  $$('[data-open-feedback]').forEach(b=>b.onclick=()=>{state.feedbackOpen.add(b.dataset.openFeedback);$(`#feedback-${b.dataset.openFeedback}`).classList.add('open');setTimeout(()=>$(`#textarea-${b.dataset.openFeedback}`)?.focus(),220)});
+  $$('[data-cancel-feedback]').forEach(b=>b.onclick=()=>{$(`#feedback-${b.dataset.cancelFeedback}`).classList.remove('open');state.feedbackOpen.delete(b.dataset.cancelFeedback)});
+  $$('[data-approve]').forEach(b=>b.onclick=()=>sendAction(b,{action:'APROVADO',contentId:b.dataset.approve}));
+  $$('[data-send-feedback]').forEach(b=>b.onclick=()=>{const id=b.dataset.sendFeedback,f=$(`#textarea-${id}`).value.trim();if(!f)return $(`#feedback-status-${id}`).textContent='Descreva o ajuste antes de enviar.';sendAction(b,{action:'ALTERACAO',contentId:id,feedback:f})});
+  setupCarousels();
+}
+function setupCarousels(){
+  $$('[data-carousel]').forEach(vp=>{
+    if(vp.dataset.bound)return;vp.dataset.bound='1';const id=vp.dataset.carousel;
+    const up=()=>{
+      const c=state.contents.find(x=>x.id===id),m=mediaFor(c),idx=currentCarouselIndex(vp);
+      $(`#count-${id}`).textContent=`${String(idx+1).padStart(2,'0')} / ${String(m.slides.length).padStart(2,'0')}`;
+      $$(`#dots-${id} i`).forEach((x,i)=>x.classList.toggle('active',i===idx));
+      $(`[data-prev="${id}"]`).disabled=idx===0;$(`[data-next="${id}"]`).disabled=idx===m.slides.length-1;
+    };
+    vp.addEventListener('scroll',()=>requestAnimationFrame(up),{passive:true});
+    vp.addEventListener('keydown',e=>{if(e.key==='ArrowRight')moveCarousel(id,1);if(e.key==='ArrowLeft')moveCarousel(id,-1)});
+    let down=false,sx=0,ss=0;
+    vp.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')return;down=true;sx=e.clientX;ss=vp.scrollLeft;vp.classList.add('dragging')});
+    vp.addEventListener('pointermove',e=>{if(down)vp.scrollLeft=ss-(e.clientX-sx)});
+    const end=()=>{if(!down)return;down=false;vp.classList.remove('dragging');const slides=[...vp.querySelectorAll('.carousel-slide')],idx=currentCarouselIndex(vp);vp.scrollTo({left:slides[idx].offsetLeft,behavior:'smooth'})};
+    vp.addEventListener('pointerup',end);vp.addEventListener('pointercancel',end);up();
+  });
+}
+async function sendAction(b,p){
+  if(state.busy.has(p.contentId))return;state.busy.add(p.contentId);b.disabled=true;b.classList.add('pressed');b.textContent=p.action==='APROVADO'?'APROVANDO…':'ENVIANDO…';
+  try{
+    await fetch(state.config.backend,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...p,projectKey:state.config.projectKey})});
+    state.actions.push({contentId:p.contentId,action:p.action,feedback:p.feedback||'',lot:state.lot});state.feedbackOpen.delete(p.contentId);
+    b.textContent=p.action==='APROVADO'?'✓ APROVADO':'✓ AJUSTE REGISTRADO';b.classList.add('success');setTimeout(()=>updateChapter(p.contentId),260);
+  }catch{b.disabled=false;toast('Não foi possível registrar. Tente novamente.')}finally{state.busy.delete(p.contentId)}
+}
+function renderCalendar(){$('#calendarList').innerHTML=stats().items.map(c=>{const d=view(c),s=statusFor(c);return`<div class="calendar-row"><time>${weekdayDate(d.date)}</time><div><strong>${esc(d.title)}</strong><small>${mediaFor(c).label} · ${mediaFor(c).intent}</small></div><small>${s==='aprovado'?'Aprovado':s==='alteracao'?'Ajuste solicitado':'Pronto para revisão'}</small></div>`}).join('')}
+function renderHistory(){const g={};state.actions.forEach(a=>{const l=a.lot||'';if(l&&l!==state.lot){g[l]??={};g[l][a.contentId]=a}});const r=Object.entries(g);$('#historyList').innerHTML=r.length?r.map(([l,it])=>`<div class="history-row"><span>${esc(l)}</span><div><strong>${Object.keys(it).length} conteúdos registrados</strong><small>Histórico de decisões disponível</small></div><small>Entrega anterior</small></div>`).join(''):`<div class="history-row"><span>AGORA</span><div><strong>O histórico começa nesta entrega.</strong><small>As próximas entregas aparecerão aqui.</small></div><small>—</small></div>`}
+function renderFiles(){const f=(state.config.files||[]).filter(x=>x.url&&x.url!=='#');$('#filesList').innerHTML=f.length?f.map(x=>`<div class="file-row"><span>${esc(x.type||'ARQUIVO')}</span><div><strong>${esc(x.title)}</strong><small>${esc(x.description||'')}</small></div><a href="${esc(x.url)}" target="_blank">ABRIR →</a></div>`).join(''):`<div class="file-row"><span>ARQUIVOS</span><div><strong>Nenhum material adicional publicado.</strong><small>Os downloads principais já estão junto de cada peça acima.</small></div><small>—</small></div>`}
+function observe(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return $$('.reveal').forEach(e=>e.classList.add('in'));
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1,rootMargin:'0px 0px -4% 0px'});
+  $$('.reveal:not(.in)').forEach(e=>io.observe(e));
+}
+function applyTheme(){const p=localStorage.getItem('audaz-theme')||'system',t=p==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p;document.documentElement.dataset.theme=t}
+function bindBase(){
+  applyTheme();
+  $('#themeBtn').onclick=()=>{const c=localStorage.getItem('audaz-theme')||'system',n=c==='system'?'light':c==='light'?'dark':'system';localStorage.setItem('audaz-theme',n);applyTheme();toast(n==='system'?'Aparência automática':n==='light'?'Tema claro':'Tema escuro')};
+  $('#menuBtn').onclick=()=>{const m=$('#mobileMenu'),o=!m.classList.contains('open');m.classList.toggle('open',o);$('#menuBtn').setAttribute('aria-expanded',o)};
+  $$('#mobileMenu a').forEach(a=>a.onclick=()=>$('#mobileMenu').classList.remove('open'));
+  $('#closeLightbox').onclick=()=>$('#lightbox').classList.remove('open');$('#lightbox').onclick=e=>{if(e.target===$('#lightbox'))$('#lightbox').classList.remove('open')};
+}
+async function init(){
+  bindBase();
+  try{
+    state.config=await fetch(`${ROOT}clientes/${CLIENT}.json`).then(r=>r.json());
+    $('#clientName').textContent=state.config.name.toUpperCase();$('#heroClient').textContent=state.config.name.toUpperCase();
+    const d=await fetch(`${state.config.backend}?key=${encodeURIComponent(state.config.projectKey)}`).then(r=>r.json());if(!d.ok)throw Error();
+    state.contents=d.contents||[];state.actions=d.actions||[];state.lot=d.lot||'';
+    renderDelivery();renderCalendar();renderHistory();renderFiles();
+  }catch(e){console.error(e);$('#delivery').innerHTML='<section class="chapter chapter--static"><div class="wrap"><span class="eyebrow">NÃO FOI POSSÍVEL CARREGAR</span><h2 class="chapter-title">A entrega não carregou corretamente.</h2></div></section>'}
+}
+init();
+</script>
+</body>
+</html>
