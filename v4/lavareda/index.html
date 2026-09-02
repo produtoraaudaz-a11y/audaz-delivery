@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#151514">
+  <title>Lavareda — Entregas Audaz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;1,800;1,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body data-client="lavareda" data-root="../../">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="audaz-brand"><i></i><strong>AUDAZ</strong><small>ENTREGAS</small></div>
+      <nav id="sideNav"></nav>
+      <div class="side-bottom">
+        <div class="client-lockup"><span>ESPAÇO CRIADO PARA</span><strong id="sideClient">Lavareda</strong></div>
+        <div class="theme-switcher">
+          <button data-theme="system" title="Automático">◐</button>
+          <button data-theme="light" title="Claro">☼</button>
+          <button data-theme="dark" title="Escuro">●</button>
+        </div>
+      </div>
+    </aside>
+
+    <header class="mobile-header">
+      <div class="mobile-brand"><b>AUDAZ</b><span>×</span><strong>LAVAREDA</strong></div>
+      <div><button id="mobileTheme">◐</button><button id="mobileMenu">☰</button></div>
+    </header>
+
+    <main class="main">
+      <div class="topbar">
+        <div><b>AUDAZ</b><span>×</span><strong id="topClient">LAVAREDA</strong></div>
+        <small>PORTAL DE ENTREGAS</small>
+      </div>
+      <section id="page-inicio" class="page active"></section>
+      <section id="page-entregas" class="page"></section>
+      <section id="page-calendario" class="page"></section>
+      <section id="page-arquivos" class="page"></section>
+      <section id="page-revisao" class="page review-page"></section>
+    </main>
+  </div>
+
+  <div id="drawer" class="drawer">
+    <div class="drawer-panel">
+      <div class="drawer-head"><strong>NAVEGAÇÃO</strong><button id="closeDrawer">×</button></div>
+      <nav id="drawerNav"></nav>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="../app.js"></script>
+</body>
+</html>
