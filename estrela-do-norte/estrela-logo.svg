@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 200" role="img" aria-label="Estrela do Norte" preserveAspectRatio="xMidYMid meet">
+  <g transform="translate(20 18)">
+    <g fill="none" stroke="#fff" stroke-width="8" stroke-linejoin="round">
+      <path d="M72 15 88 58 134 60 98 88 110 134 72 108 34 134 46 88 10 60 56 58Z"/>
+    </g>
+    <path fill="#1687ff" d="m72 34 8 27 29 1-23 17 8 29-22-16-22 16 8-29-23-17 29-1Z"/>
+    <g fill="#fff" font-family="Arial Black,Arial,sans-serif" font-weight="900">
+      <text x="165" y="82" font-size="58" letter-spacing="-2">ESTRELA</text>
+      <text x="167" y="128" font-size="34" letter-spacing="5">DO NORTE</text>
+    </g>
+  </g>
+</svg>
